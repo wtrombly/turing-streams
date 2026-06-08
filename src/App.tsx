@@ -127,6 +127,11 @@ type FormState = "idle" | "submitting" | "success" | "error";
 
 const WEB3FORMS_KEY = import.meta.env.VITE_WEB3FORMS_KEY as string;
 
+// Speed-to-lead: after a form submit, offer instant self-booking instead of
+// waiting on an email reply. Set this to your scheduling link (Calendly, Cal.com,
+// etc.) to show a "book now" CTA on the success screen. Leave empty to hide it.
+const BOOKING_URL = "";
+
 function App() {
   const [formState, setFormState] = useState<FormState>("idle");
 
@@ -385,7 +390,17 @@ function App() {
                   <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14" />
                   <polyline points="22 4 12 14.01 9 11.01" />
                 </svg>
-                <p>Thanks! We'll be in touch soon.</p>
+                <p>Thanks! We'll be in touch within one business day.</p>
+                {BOOKING_URL && (
+                  <a
+                    href={BOOKING_URL}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="btn-primary"
+                  >
+                    Skip the wait — book a discovery call now
+                  </a>
+                )}
               </div>
             ) : (
               <form className="contact-form" onSubmit={handleSubmit} noValidate>
